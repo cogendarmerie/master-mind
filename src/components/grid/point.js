@@ -1,14 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 
-const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple'];
-function changeColor(){
+export default function Point({colors, rowIndex, locked, setRowPointColor}){
+    colors = ['empty', ...colors];
+    const [index, setIndex] = useState(0);
 
-}
+    const changeColor = () => {
+        if (!locked){
+            setIndex(index < colors.length - 1 ? index+1 : 1);
+            setRowPointColor(rowIndex, colors[index+1]);
+        }
+    }
 
-export default function Point(){
     return (
         <>
-            <div data-color={colors[Math.floor(Math.random() * colors.length)]} className={"bullet-point-dest"}>
+            <div onClick={changeColor} data-color={colors[index]} className={"bullet-point-dest"}>
                 <div></div>
             </div>
         </>

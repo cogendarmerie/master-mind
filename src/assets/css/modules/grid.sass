@@ -46,10 +46,12 @@
     > div
       background-color: $color-orange
 
+.bullet-point-dest
+  cursor: pointer
 
 .hint-container
-  display: flex
-  flex-direction: row
+  display: grid
+  grid-template-columns: repeat(2, 1fr)
   gap: 8px
 
   > div
@@ -64,3 +66,9 @@
   > div
     height: 10px
     width: 10px
+
+  &[data-color="red"] > div
+    background-color: $color-red
+
+  &[data-color="black"] > div
+    background-color: $color-black

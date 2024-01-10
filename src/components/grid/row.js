@@ -2,51 +2,64 @@ import React, {useState} from "react";
 import Point from "./point";
 import Hint from "./indice";
 
-function checkRow(row, valid) {
-    let correctCount = 0;
-    let misplacedCount = 0;
-
-    const frequencyValid = {};
-    const frequencyUser = {};
-
-    //Vérifier les couleurs bien placés
-    for (let i = 0; i < 4; i++) {
-        if (row[i] === valid[i]) {
-            correctCount++;
-        } else {
-            frequencyValid[row[i]] = (frequencyValid[row[i]] || 0) + 1;
-            frequencyUser[valid[i]] = (frequencyUser[valid[i]] || 0) + 1;
-        }
-    }
-
-    //Vérifier les couleurs correct mais mal places
-    for (const color in frequencyValid) {
-        if (frequencyUser[color] && frequencyUser[color] > 0) {
-            frequencyUser[color]--;
-            misplacedCount++;
-        }
-    }
-
-    let hintColors = [];
-    for (let i = 0; i < 4; i++) {
-        if(correctCount > 0) {
-            hintColors.push("black");
-            correctCount--;
-        } else if(misplacedCount > 0) {
-            hintColors.push("red");
-            misplacedCount--;
-        } else {
-            hintColors.push("empty");
-        }
-    }
-
-    return hintColors;
-}
-
-export default function Row({colors, validRow}) {
+export default function Row({colors, validRow, setWin}) {
     const [pointsColors, setPointsColors] = useState(["empty", "empty", "empty", "empty"]);
     const [locked, setLocked] = useState(false);
     const [hintColors, setHintColors] = useState(["empty", "empty", "empty", "empty"]);
+
+    const checkRow = (row, valid) => {
+        let correctCount = 0;
+        let misplacedCount = 0;
+
+        const frequencyValid = {};
+        const frequencyUser = {};
+
+        //Vérifier les couleurs bien placées
+        for (let i = 0; i < 4; i++) {
+            if (row[i] === valid[i]) {
+                correctCount++;
+            } else {
+                frequencyValid[row[i]] = (frequencyValid[row[i]] || 0) + 1;
+                frequencyUser[valid[i]] = (frequencyUser[valid[i]] || 0) + 1;
+            }
+        }
+
+        //Vérifier les couleurs correctes mais mal places
+        for (const color in frequencyValid) {
+            if (frequencyUser[color] && frequencyUser[color] > 0) {
+                frequencyUser[color]--;
+                misplacedCount++;
+            }
+        }
+
+        if(correctCount === 4) {
+            setWin(true);
+            return ["black", "black", "black", "black"];
+        }
+
+        if(correctCount === 0 && misplacedCount === 0) {
+            return ["empty", "empty", "empty", "empty"];
+        }
+
+        if(misplacedCount === 4) {
+            return ["red", "red", "red", "red"];
+        }
+
+        let hintColors = [];
+        for (let i = 0; i < 4; i++) {
+            if(correctCount > 0) {
+                hintColors.push("black");
+                correctCount--;
+            } else if(misplacedCount > 0) {
+                hintColors.push("red");
+                misplacedCount--;
+            } else {
+                hintColors.push("empty");
+            }
+        }
+
+        return hintColors;
+    }
 
     const setRowPointColor = (index, color) => {
         setPointsColors(pointsColors => {

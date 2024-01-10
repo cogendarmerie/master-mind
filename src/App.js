@@ -2,6 +2,10 @@ import logo from './logo.svg';
 import './assets/css/main.css';
 import Row from "./components/grid/row";
 import {useState} from "react";
+import Confetti from "react-confetti";
+import useSound from "use-sound";
+
+import sound from "./assets/sound/sound.mp3";
 
 function selectColors(colors){
     return [
@@ -17,6 +21,17 @@ function App() {
     const [validRows, setValidRows] = useState(selectColors(colors));
     const [score, setScore] = useState(0);
     const [game, setGame] = useState(1);
+    const [win, setWinT] = useState(false);
+    const [play] = useSound(sound, { volume: 10 });
+
+    const setWin = () => {
+        setWinT(true);
+        play();
+
+        setTimeout(() => {
+            setWinT(false);
+        }, 17000);
+    }
 
     return (
         <div className="App">
@@ -29,16 +44,19 @@ function App() {
             <main>
                 <section id="gameboard">
                     <div id={"gameboard-background"}>
-                        <Row colors={colors} validRow={validRows}/>
-                        <Row colors={colors} validRow={validRows}/>
-                        <Row colors={colors} validRow={validRows}/>
-                        <Row colors={colors} validRow={validRows}/>
-                        <Row colors={colors} validRow={validRows}/>
-                        <Row colors={colors} validRow={validRows}/>
-                        <Row colors={colors} validRow={validRows}/>
-                        <Row colors={colors} validRow={validRows}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
+                        <Row colors={colors} validRow={validRows} setWin={setWin}/>
                     </div>
                 </section>
+                {win && <Confetti />}
             </main>
         </div>
     );

@@ -1,0 +1,66 @@
+.grid-row
+  display: flex
+  flex-direction: row
+  align-items: center
+  gap: 10px
+  padding: 12px
+
+.bullet-point-dest, .hint
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  height: 32px
+  width: 32px
+  border-radius: 100rem
+  border: 2px solid $color-grey
+  background-color: white
+
+  > div
+    height: 24px
+    width: 24px
+    background-color: $color-background
+    border-radius: 100rem
+
+  &[data-color="red"]
+    > div
+      background-color: $color-red
+
+  &[data-color="blue"]
+    > div
+      background-color: $color-blue
+
+  &[data-color="green"]
+    > div
+      background-color: $color-green
+
+  &[data-color="yellow"]
+    > div
+      background-color: $color-yellow
+
+  &[data-color="purple"]
+    > div
+      background-color: $color-purple
+
+  &[data-color="orange"]
+    > div
+      background-color: $color-orange
+
+
+.hint-container
+  display: flex
+  flex-direction: row
+  gap: 8px
+
+  > div
+    display: flex
+    flex-direction: column
+    gap: 8px
+
+.hint
+  height: 16px
+  width: 16px
+
+  > div
+    height: 10px
+    width: 10px
